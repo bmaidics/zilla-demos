@@ -1,10 +1,20 @@
 ingress:
   enabled: true
   ingressClassName: nginx
-  host: taxi.aklivity.io
+  hosts: 
+    - host: taxi.aklivity.io
+      paths:
+        - backend:
+            service:
+              name: map-ui
+              port:
+                number: 8080
+          pathType: Prefix
+          path: /
   tls:
-    enabled: true
-    secretName: taxi-demo-tls
+    - secretName: taxi-demo-tls
+      hosts: 
+        - taxi.aklivity.io
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
