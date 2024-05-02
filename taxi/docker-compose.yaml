@@ -37,7 +37,10 @@ services:
       - 8085:8085
 
   dispatch-service:
-    image: ghcr.io/aklivity/extras-taxi-service:sha-5ac7a9c
+    # image: ghcr.io/aklivity/extras-taxi-service:sha-5ac7a9c
+    build:
+      context: ../extras-containers/taxi/grpc/service
+      dockerfile: Dockerfile
     container_name: dispatch-service
     restart: unless-stopped
     depends_on:
@@ -47,6 +50,7 @@ services:
     environment:
       PRINT_SIM_LOGS: false
       DEFAUlT_ROUTES: true
+      REPLICATION: 300
       BROKER_HOST: zilla-taxi-tracking
       BROKER_PORT: 7183
     ports:
